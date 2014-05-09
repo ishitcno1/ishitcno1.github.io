@@ -9,6 +9,8 @@ tags: baidu map
 # 准备  
 去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。
 
+
+
 # 初始化  
 新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。
 
@@ -38,6 +40,8 @@ public class MyApplication extends Application {
 }
 ```  
 
+
+
 # 使用  
 在layout中加入  
 
@@ -50,6 +54,8 @@ public class MyApplication extends Application {
 
 ```  
 
+
+
 ```java
 MapView mapView = (MapView) findViewById(R.id.map);
 MapController controller = mapView.getController();
@@ -60,8 +66,11 @@ controller.setCenter(geoPoint);
 controller.setZoom(15);
 ```
 
+
+
 # 解决与ScrollView冲突  
 有时候MapView要嵌套到ScrollView中使用，此时会产生冲突，可用如下方法解决  
+
 ```java
 mapView.setOnTouchListener(new View.OnTouchListener() {
 	@Override
@@ -75,8 +84,11 @@ mapView.setOnTouchListener(new View.OnTouchListener() {
 });
 ```
 
+
+
 # 添加标记物  
 需要新建一个ItemizedOverlay的SubClass  
+
 ```java
 public class MarkOverlay extends ItemizedOverlay<OverlayItem> {
 	public MarkOverlay(Drawable mark, MapView mapView) {
@@ -84,6 +96,7 @@ public class MarkOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 }
 ```
+
 
 ```java
 Drawable mark = getResources().getDrawable(R.drawable.location);
@@ -95,4 +108,5 @@ mapView.getOverlays().clear();
 mapView.getOverlays().add(markOverlay);
 mapView.refresh();
 ```
+
 
