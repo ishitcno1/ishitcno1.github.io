@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Baidu | 晓耕翻露草]]></title>
+  <link href="http://ishitcno1.github.io/blog/categories/baidu/atom.xml" rel="self"/>
+  <link href="http://ishitcno1.github.io/"/>
+  <updated>2015-01-27T08:45:12+08:00</updated>
+  <id>http://ishitcno1.github.io/</id>
+  <author>
+    <name><![CDATA[ishitcno1]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[百度地图sdk的简单使用]]></title>
+    <link href="http://ishitcno1.github.io/blog/2014/05/09/baidu-map-sdk/"/>
+    <updated>2014-05-09T22:00:00+08:00</updated>
+    <id>http://ishitcno1.github.io/blog/2014/05/09/baidu-map-sdk</id>
+    <content type="html"><![CDATA[<h2>准备</h2>
+
+<p>去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。</p>
+
+<!-- more -->
+
+
+<h2>初始化</h2>
+
+<p>新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。</p>
+
+<pre><code class="java  ">public class MyApplication extends Application {
+    private static final String BAIDU_MAP_KEY = "yourKey";
+    private BMapManager mBMapManager = null;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        initBaiduMapManager();
+    }
+
+    public boolean initBaiduMapManager() {
+        if (mBMapManager == null) {
+            mBMapManager = new BMapManager(getApplicationContext());
+        }
+
+        if (mBMapManager.init(BAIDU_MAP_KEY, null)) {
+            // success
+        } else {
+            // error
+        }
+    }
+}
+</code></pre>
+
+<h2>使用</h2>
+
+<p>在layout中加入</p>
+
+<pre><code class="xml  ">&lt;com.baidu.mapapi.map.MapView
+            android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"/&gt;
+</code></pre>
+
+<pre><code class="java">MapView mapView = (MapView) findViewById(R.id.map);
+MapController controller = mapView.getController();
+double lat = 39.915;
+double lon = 116.404;
+GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+controller.setCenter(geoPoint);
+controller.setZoom(15);
+</code></pre>
+
+<h2>解决与ScrollView冲突</h2>
+
+<p>有时候MapView要嵌套到ScrollView中使用，此时会产生冲突，可用如下方法解决</p>
+
+<pre><code class="java">mapView.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            scrollView.requestDisallowInterceptTouchEvent(false);
+        } else {
+            scrollView.requestDisallowInterceptTouchEvent(true);
+        }
+    }
+});
+</code></pre>
+
+<h2>添加标记物</h2>
+
+<p>需要新建一个ItemizedOverlay的SubClass</p>
+
+<pre><code class="java">public class MarkOverlay extends ItemizedOverlay&lt;OverlayItem&gt; {
+    public MarkOverlay(Drawable mark, MapView mapView) {
+        super(mark, mapView);
+    }
+}
+</code></pre>
+
+<pre><code class="java">Drawable mark = getResources().getDrawable(R.drawable.location);
+OverlayItem item = new OverlayItem(geoPoint, "", "");
+item.setMarker(mark);
+MarkOverlay markOverlay = new MarkOverlay(mark, mapView);
+markOverlay.add(item);
+mapView.getOverlays().clear();
+mapView.getOverlays().add(markOverlay);
+mapView.refresh();
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

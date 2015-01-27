@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Github | 晓耕翻露草]]></title>
+  <link href="http://ishitcno1.github.io/blog/categories/github/atom.xml" rel="self"/>
+  <link href="http://ishitcno1.github.io/"/>
+  <updated>2015-01-27T08:45:12+08:00</updated>
+  <id>http://ishitcno1.github.io/</id>
+  <author>
+    <name><![CDATA[ishitcno1]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[使用jekyll在github上写blog]]></title>
+    <link href="http://ishitcno1.github.io/blog/2013/12/25/use-jekyll-with-github/"/>
+    <updated>2013-12-25T22:37:23+08:00</updated>
+    <id>http://ishitcno1.github.io/blog/2013/12/25/use-jekyll-with-github</id>
+    <content type="html"><![CDATA[<h2>1.安装jekyll</h2>
+
+<pre><code>gem install jekyll
+</code></pre>
+
+<h2>2.创建帐号</h2>
+
+<p>在github上新建repo，形式为username.github.io，其中username与你的用户名相同。具体可以看<a href="http://pages.github.com/">Github Pages</a></p>
+
+<!-- more -->
+
+
+<p>将repo clone到本地，并用jekyll初始化项目</p>
+
+<pre><code>git clone git.url
+cd username.github.io
+jekyll new myblog
+mv myblog/* ./
+mv myblog/.gitignore ./
+rmdir myblog/
+</code></pre>
+
+<h2>3.开发与测试</h2>
+
+<p>运行开发服务器，加入 <code>--watch</code> 后，jekyll会监视文件的改动并即时生成页面，方便开发。</p>
+
+<pre><code>jekyll server --watch
+</code></pre>
+
+<p>用浏览器访问 <code>localhost:4000</code> 就能看到生成的页面。<br/>
+具体的开发参看<a href="http://jekyllrb.com/docs/home/">jekyll官网</a>和其他人搭建的blog。</p>
+
+<h2>4.推送到github</h2>
+
+<pre><code>git push -u origin master
+</code></pre>
+
+<p>等10分钟左右，用浏览器打开username.github.io就可以看到生成的页面了。</p>
+
+<h2>5.后记</h2>
+
+<p>这只是一篇简单的流程，具体使用jekyll还是看官方文档。</p>
+]]></content>
+  </entry>
+  
+</feed>

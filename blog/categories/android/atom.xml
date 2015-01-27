@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | 晓耕翻露草]]></title>
+  <link href="http://ishitcno1.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://ishitcno1.github.io/"/>
+  <updated>2015-01-27T08:45:12+08:00</updated>
+  <id>http://ishitcno1.github.io/</id>
+  <author>
+    <name><![CDATA[ishitcno1]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android源码下载中的错误与解决办法]]></title>
+    <link href="http://ishitcno1.github.io/blog/2014/10/28/download-android-source/"/>
+    <updated>2014-10-28T20:49:00+08:00</updated>
+    <id>http://ishitcno1.github.io/blog/2014/10/28/download-android-source</id>
+    <content type="html"><![CDATA[<p>使用 <code>python ./repo sync -f</code> 同步，可自动修复同步错误的文件</p>
+
+<p>设置shell代理</p>
+
+<pre><code>$ export HTTP_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;
+
+$ export HTTPS_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;
+</code></pre>
+
+<!-- more -->
+
+
+<p>Not a git repository错误
+多试几次，如果还不行，可查看相应目录下的config文件，找到仓库地址后手动同步</p>
+
+<pre><code>git clone --bare &lt;repo_url&gt;
+</code></pre>
+
+<p>若有checkout分支，根目录要用 <code>git init</code> 初始化</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android字符串中使用占位符]]></title>
+    <link href="http://ishitcno1.github.io/blog/2014/06/18/android-string-place-holder/"/>
+    <updated>2014-06-18T17:30:00+08:00</updated>
+    <id>http://ishitcno1.github.io/blog/2014/06/18/android-string-place-holder</id>
+    <content type="html"><![CDATA[<p>一是可以通过Java的 <code>String.format(String format, Object... args)</code> 方法来实现</p>
+
+<p>二则是通过Android自带的 <code>getResources().getString(int id, Object... formatArgs）</code> 实现</p>
+
+<p>占位符的语法可以参考<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">Java文档</a></p>
+
+<p>简单演示下第二种方法</p>
+
+<!-- more -->
+
+
+<p>strings.xml</p>
+
+<pre><code class="xml">&lt;string name="boolean_conversion"&gt;Boolean: %1$b\n&lt;/string&gt;
+&lt;string name="string_conversion"&gt;String: %1$s\n&lt;/string&gt;
+&lt;string name="integer_conversion"&gt;Integer: %1$d\n&lt;/string&gt;
+&lt;string name="float_conversion"&gt;Float: %1$.2f\n&lt;/string&gt;
+&lt;string name="date_or_time_conversion"&gt;Year: %1$tY, Month: %1$tM, Day:%1$td&lt;/string&gt;
+</code></pre>
+
+<p>MainActivity.java</p>
+
+<pre><code class="java">public class MainActivity extends ActionBarActivity {
+
+    @Override
+        protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+            setContentView(R.layout.ac_main);
+
+            TextView text = (TextView) findViewById(R.id.ac_main_text);
+            StringBuilder builder = new StringBuilder();
+            builder.append(
+                    getResources().getString(R.string.boolean_conversion, true));
+
+            builder.append(
+                    getResources().getString(R.string.string_conversion, "hello world"));
+
+            builder.append(
+                    getResources().getString(R.string.integer_conversion, 1234));
+
+            builder.append(
+                    getResources().getString(R.string.float_conversion, 1234.5678));
+
+            Calendar calendar = Calendar.getInstance();
+            builder.append(
+                    getResources().getString(R.string.date_or_time_conversion, calendar));
+
+            text.setText(builder.toString());
+    }
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[百度地图sdk的简单使用]]></title>
+    <link href="http://ishitcno1.github.io/blog/2014/05/09/baidu-map-sdk/"/>
+    <updated>2014-05-09T22:00:00+08:00</updated>
+    <id>http://ishitcno1.github.io/blog/2014/05/09/baidu-map-sdk</id>
+    <content type="html"><![CDATA[<h2>准备</h2>
+
+<p>去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。</p>
+
+<!-- more -->
+
+
+<h2>初始化</h2>
+
+<p>新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。</p>
+
+<pre><code class="java  ">public class MyApplication extends Application {
+    private static final String BAIDU_MAP_KEY = "yourKey";
+    private BMapManager mBMapManager = null;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        initBaiduMapManager();
+    }
+
+    public boolean initBaiduMapManager() {
+        if (mBMapManager == null) {
+            mBMapManager = new BMapManager(getApplicationContext());
+        }
+
+        if (mBMapManager.init(BAIDU_MAP_KEY, null)) {
+            // success
+        } else {
+            // error
+        }
+    }
+}
+</code></pre>
+
+<h2>使用</h2>
+
+<p>在layout中加入</p>
+
+<pre><code class="xml  ">&lt;com.baidu.mapapi.map.MapView
+            android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"/&gt;
+</code></pre>
+
+<pre><code class="java">MapView mapView = (MapView) findViewById(R.id.map);
+MapController controller = mapView.getController();
+double lat = 39.915;
+double lon = 116.404;
+GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+controller.setCenter(geoPoint);
+controller.setZoom(15);
+</code></pre>
+
+<h2>解决与ScrollView冲突</h2>
+
+<p>有时候MapView要嵌套到ScrollView中使用，此时会产生冲突，可用如下方法解决</p>
+
+<pre><code class="java">mapView.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            scrollView.requestDisallowInterceptTouchEvent(false);
+        } else {
+            scrollView.requestDisallowInterceptTouchEvent(true);
+        }
+    }
+});
+</code></pre>
+
+<h2>添加标记物</h2>
+
+<p>需要新建一个ItemizedOverlay的SubClass</p>
+
+<pre><code class="java">public class MarkOverlay extends ItemizedOverlay&lt;OverlayItem&gt; {
+    public MarkOverlay(Drawable mark, MapView mapView) {
+        super(mark, mapView);
+    }
+}
+</code></pre>
+
+<pre><code class="java">Drawable mark = getResources().getDrawable(R.drawable.location);
+OverlayItem item = new OverlayItem(geoPoint, "", "");
+item.setMarker(mark);
+MarkOverlay markOverlay = new MarkOverlay(mark, mapView);
+markOverlay.add(item);
+mapView.getOverlays().clear();
+mapView.getOverlays().add(markOverlay);
+mapView.refresh();
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

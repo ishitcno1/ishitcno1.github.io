@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -8,11 +9,10 @@
   <meta name="author" content="ishitcno1">
 
   
-  <meta name="description" content="这里用到的工具是markdown-resume，Github地址
-我fork了下，写了个中文版的sample.md，见这里 1.安装php和wkhtmltopdf 1
+  <meta name="description" content="使用 python ./repo sync -f 同步，可自动修复同步错误的文件 设置shell代理 1
 2
-sudo apt-get install php5
-sudo apt-get install wkhtmltopdf 2. &hellip;">
+3
+$ export HTTP_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +72,200 @@ sudo apt-get install wkhtmltopdf 2. &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/28/download-android-source/">Android源码下载中的错误与解决办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-28T20:49:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:49 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用 <code>python ./repo sync -f</code> 同步，可自动修复同步错误的文件</p>
+
+<p>设置shell代理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export HTTP_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;
+</span><span class='line'>
+</span><span class='line'>$ export HTTPS_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/28/download-android-source/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/18/android-string-place-holder/">Android字符串中使用占位符</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T17:30:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:30 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一是可以通过Java的 <code>String.format(String format, Object... args)</code> 方法来实现</p>
+
+<p>二则是通过Android自带的 <code>getResources().getString(int id, Object... formatArgs）</code> 实现</p>
+
+<p>占位符的语法可以参考<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">Java文档</a></p>
+
+<p>简单演示下第二种方法</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/18/android-string-place-holder/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/09/baidu-map-sdk/">百度地图sdk的简单使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-09T22:00:00+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>准备</h2>
+
+<p>去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/09/baidu-map-sdk/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/12/lvm-extend/">LVM扩展磁盘空间</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-12T22:40:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:40 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+<li><p>用fdisk分区</p></li>
+<li><p>初始化为pv <code>sudo pvcreate /dev/sda6</code></p></li>
+<li><p>将分区加入vg <code>sudo vgextend vg1 /dev/sda6</code></p></li>
+<li><p>扩展lv <code>sudo lvextend -L +100G /dev/vg1/vg1_home</code></p></li>
+<li><p>扩展文件系统 <code>sudo resize2fs /dev/vg1/vg1_home</code></p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/02/java-note-char/">Java笔记——字符</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-02T10:00:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>10:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1.基本概念</h2>
+
+<p>Code Point： 一个Code Point表示一个Unicode字符，例如U+0041表示A，U+2122表示™，U+03C0表示π，U+1D56B表示𝕫。对于基本字符（basic multilingual），Code Point取值从U+0000到U+FFFF。对于扩展字符（supplementary characters），Code Point取值从U+10000到U+10FFFF。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/02/java-note-char/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/12/31/write-resume-with-markdown/">使用Markdown撰写简历</a></h1>
     
     
@@ -81,7 +275,7 @@ sudo apt-get install wkhtmltopdf 2. &hellip;">
 
 
 
-<time class='entry-date' datetime='2013-12-31T17:21:26+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>5:21 pm</span></time>
+<time class='entry-date' datetime='2013-12-31T17:21:03+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>5:21 pm</span></time>
         
       </p>
     
@@ -99,79 +293,56 @@ sudo apt-get install wkhtmltopdf 2. &hellip;">
 </span><span class='line'>sudo apt-get install wkhtmltopdf</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>2.获取markdown-resume</h2>
 
-<p>原作者地址</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/there4/markdown-resume.git</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我修改后的地址</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/ishitcno1/markdown-resume.git</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3.生成简历</h2>
-
-<p>resume目录下的sample.md展示了语法，按其修改使用即可。如果你clone的我的版本，checkout zhsample分支后，resume中还会存在一个zhsample.md。这是一个中文版的示例。</p>
-
-<p>生成html版简历</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>php ./bin/resume.php --source resume/sample.md</span></code></pre></td></tr></table></div></figure>
-
-
-<p>生成pdf版和html版简历</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>php ./bin/resume.php --source resume/sample.md --pdf</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>4.使用模板</h2>
-
-<p>默认使用的模板是modern，项目还包含了blockish和unstyled，当然完全可以自定义。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nx">php</span> <span class="o">./</span><span class="nx">bin</span><span class="o">/</span><span class="nx">resume</span><span class="o">.</span><span class="nx">php</span> <span class="o">--</span><span class="nx">source</span> <span class="nx">resume</span><span class="o">/</span><span class="nx">sample</span><span class="o">.</span><span class="nx">md</span> <span class="o">-</span><span class="nx">t</span> <span class="nx">blockish</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>默认部分字体偏小，可以修改模板下的CSS文件，如修改resume.css</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">dl</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">dd</span> <span class="err">{</span>
-</span><span class='line'>    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1.5em</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">line-height</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="err">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">#footer</span> <span class="o">+</span> <span class="nt">p</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">16px</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/31/write-resume-with-markdown/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/25/use-jekyll-with-github/">使用jekyll在github上写blog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-12-25T22:37:23+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:37 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>1.安装jekyll</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install jekyll</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2.创建帐号</h2>
+
+<p>在github上新建repo，形式为username.github.io，其中username与你的用户名相同。具体可以看<a href="http://pages.github.com/">Github Pages</a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/12/25/use-jekyll-with-github/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -190,7 +361,23 @@ sudo apt-get install wkhtmltopdf 2. &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/12/31/write-resume-with-markdown/">使用Markdown撰写简历</a>
+        <a href="/blog/2014/10/28/download-android-source/">Android源码下载中的错误与解决办法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/android-string-place-holder/">Android字符串中使用占位符</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/09/baidu-map-sdk/">百度地图sdk的简单使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/12/lvm-extend/">LVM扩展磁盘空间</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/02/java-note-char/">Java笔记——字符</a>
       </li>
     
   </ul>

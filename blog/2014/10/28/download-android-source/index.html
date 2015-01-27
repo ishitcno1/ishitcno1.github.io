@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Resume - 晓耕翻露草</title>
+  <title>Android源码下载中的错误与解决办法 - 晓耕翻露草</title>
   <meta name="author" content="ishitcno1">
 
   
-  <meta name="description" content="Category: resume">
+  <meta name="description" content="使用 python ./repo sync -f 同步，可自动修复同步错误的文件 设置shell代理 1
+2
+3
+$ export HTTP_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ishitcno1.github.io/blog/categories/resume/">
+  <link rel="canonical" href="http://ishitcno1.github.io/blog/2014/10/28/download-android-source/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="晓耕翻露草" type="application/atom+xml">
@@ -62,35 +65,94 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Resume</h1>
+    
+      <h1 class="entry-title">Android源码下载中的错误与解决办法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-28T20:49:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:49 pm</span></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
+
+
+<div class="entry-content"><p>使用 <code>python ./repo sync -f</code> 同步，可自动修复同步错误的文件</p>
+
+<p>设置shell代理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export HTTP_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;
+</span><span class='line'>
+</span><span class='line'>$ export HTTPS_PROXY=http://&lt;proxy_user_id&gt;:&lt;proxy_password&gt;@&lt;proxy_server&gt;:&lt;proxy_port&gt;</span></code></pre></td></tr></table></div></figure>
 
 
 
-  
-  <h2>2013</h2>
 
-<article>
-  
-<h1><a href="/blog/2013/12/31/write-resume-with-markdown/">使用Markdown撰写简历</a></h1>
-<time datetime="2013-12-31T17:21:03+08:00" pubdate><span class='month'>Dec</span> <span class='day'>31</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/markdown/'>markdown</a>, <a class='category' href='/blog/categories/resume/'>resume</a></span>
-</footer>
+<!-- more -->
 
 
-</article>
+<p>Not a git repository错误
+多试几次，如果还不行，可查看相应目录下的config文件，找到仓库地址后手动同步</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone --bare &lt;repo_url&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>若有checkout分支，根目录要用 <code>git init</code> 初始化</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">ishitcno1</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-28T20:49:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:49 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/source/'>source</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://ishitcno1.github.io/blog/2014/10/28/download-android-source/" data-via="" data-counturl="http://ishitcno1.github.io/blog/2014/10/28/download-android-source/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/18/android-string-place-holder/" title="Previous Post: Android字符串中使用占位符">&laquo; Android字符串中使用占位符</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
