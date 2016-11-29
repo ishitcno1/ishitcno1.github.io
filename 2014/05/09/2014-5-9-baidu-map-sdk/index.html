@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百度地图sdk的简单使用 | 晓耕翻露草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="准备去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。
+初始化新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。
+1234567891011121314151617181920212223242526272829303132333435363738">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度地图sdk的简单使用">
+<meta property="og:url" content="http://yoursite.com/2014/05/09/2014-5-9-baidu-map-sdk/index.html">
+<meta property="og:site_name" content="晓耕翻露草">
+<meta property="og:description" content="准备去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。
+初始化新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。
+1234567891011121314151617181920212223242526272829303132333435363738">
+<meta property="og:updated_time" content="2016-11-29T11:27:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度地图sdk的简单使用">
+<meta name="twitter:description" content="准备去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。
+初始化新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。
+1234567891011121314151617181920212223242526272829303132333435363738">
+  
+    <link rel="alternative" href="/atom.xml" title="晓耕翻露草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">晓耕翻露草</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2014-5-9-baidu-map-sdk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/09/2014-5-9-baidu-map-sdk/" class="article-date">
+  <time datetime="2014-05-09T14:00:00.000Z" itemprop="datePublished">2014-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      百度地图sdk的简单使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。</p>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class MyApplication extends Application &#123;</div><div class="line">	private static final String BAIDU_MAP_KEY = "yourKey";</div><div class="line">	private BMapManager mBMapManager = null;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void onCreate() &#123;</div><div class="line">		super.onCreate();</div><div class="line"></div><div class="line">		initBaiduMapManager();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public boolean initBaiduMapManager() &#123;</div><div class="line">		if (mBMapManager == null) &#123;</div><div class="line">			mBMapManager = new BMapManager(getApplicationContext());</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		if (mBMapManager.init(BAIDU_MAP_KEY, null)) &#123;</div><div class="line">			// success</div><div class="line">		&#125; else &#123;</div><div class="line">			// error</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">```  </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># 使用  </div><div class="line">在layout中加入  </div><div class="line"></div><div class="line">```xml  </div><div class="line">&lt;com.baidu.mapapi.map.MapView</div><div class="line">            android:id="@+id/map"</div><div class="line">	    android:layout_width="match_parent"</div><div class="line">	    android:layout_height="match_parent"</div><div class="line">	    android:clickable="true"/&gt;</div><div class="line"></div><div class="line">```  </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">```java</div><div class="line">MapView mapView = (MapView) findViewById(R.id.map);</div><div class="line">MapController controller = mapView.getController();</div><div class="line">double lat = 39.915;</div><div class="line">double lon = 116.404;</div><div class="line">GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));</div><div class="line">controller.setCenter(geoPoint);</div><div class="line">controller.setZoom(15);</div></pre></td></tr></table></figure>
+<h1 id="解决与ScrollView冲突"><a href="#解决与ScrollView冲突" class="headerlink" title="解决与ScrollView冲突"></a>解决与ScrollView冲突</h1><p>有时候MapView要嵌套到ScrollView中使用，此时会产生冲突，可用如下方法解决  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mapView.setOnTouchListener(<span class="keyword">new</span> View.OnTouchListener() &#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (event.getAction() == MotionEvent.ACTION_UP) &#123;</div><div class="line">			scrollView.requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			scrollView.requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="添加标记物"><a href="#添加标记物" class="headerlink" title="添加标记物"></a>添加标记物</h1><p>需要新建一个ItemizedOverlay的SubClass  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MarkOverlay</span> <span class="keyword">extends</span> <span class="title">ItemizedOverlay</span>&lt;<span class="title">OverlayItem</span>&gt; </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MarkOverlay</span><span class="params">(Drawable mark, MapView mapView)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(mark, mapView);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Drawable mark = getResources().getDrawable(R.drawable.location);</div><div class="line">OverlayItem item = <span class="keyword">new</span> OverlayItem(geoPoint, <span class="string">""</span>, <span class="string">""</span>);</div><div class="line">item.setMarker(mark);</div><div class="line">MarkOverlay markOverlay = <span class="keyword">new</span> MarkOverlay(mark, mapView);</div><div class="line">markOverlay.add(item);</div><div class="line">mapView.getOverlays().clear();</div><div class="line">mapView.getOverlays().add(markOverlay);</div><div class="line">mapView.refresh();</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/09/2014-5-9-baidu-map-sdk/" data-id="ciw3fdrg1000buztlh7yqxljd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/baidu-map/">baidu map</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/06/18/2014-6-18-android-string-place-holder/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android字符串中使用占位符
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/03/12/2014-3-12-lvm-extend/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LVM扩展磁盘空间</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-source/">android source</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/baidu-map/">baidu map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-char-unicode-blog/">java char unicode blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-github-markdown-blog/">jekyll github markdown blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-lvm/">linux lvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/android-source/" style="font-size: 10px;">android source</a> <a href="/tags/baidu-map/" style="font-size: 10px;">baidu map</a> <a href="/tags/java-char-unicode-blog/" style="font-size: 10px;">java char unicode blog</a> <a href="/tags/jekyll-github-markdown-blog/" style="font-size: 10px;">jekyll github markdown blog</a> <a href="/tags/linux-lvm/" style="font-size: 10px;">linux lvm</a> <a href="/tags/resume-markdown-blog/" style="font-size: 10px;">resume markdown blog</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/29/2016-11-29-build-web-site-md/">网站开发总结</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/2016-3-9-vim-quick-guide/">Vim快速复习</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/28/2014-10-28-download-android-source/">Android源码下载中的错误与解决办法</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/18/2014-6-18-android-string-place-holder/">Android字符串中使用占位符</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/09/2014-5-9-baidu-map-sdk/">百度地图sdk的简单使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- my blog -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3283287286910308"
+     data-ad-slot="2306449074"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 ishitcno1<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

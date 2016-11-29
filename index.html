@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>晓耕翻露草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="晓耕翻露草">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="晓耕翻露草">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="晓耕翻露草">
+  
+    <link rel="alternative" href="/atom.xml" title="晓耕翻露草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">晓耕翻露草</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-2016-11-29-build-web-site-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/29/2016-11-29-build-web-site-md/" class="article-date">
+  <time datetime="2016-11-29T11:31:29.000Z" itemprop="datePublished">2016-11-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/29/2016-11-29-build-web-site-md/">网站开发总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>近期做了个小网站，这里回顾下用到的技术和坑点</p>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>以前没有实践过，这次用在实际布置中配合jenkins使用，确实很方便。镜像可在hub.docker.com找到，<br>也可自制后上传。</p>
+<p>mongo，使用官方镜像，用 <code>-v /path/to/data/db:/data/db</code> 挂载数据库就行。</p>
+<p>nginx，配置文件在 <code>/etc/nginx/conf.d/</code> 中，build前端镜像时使用以下指令替换<br><code>COPY /path/to/conf.d /etc/nginx/conf.d/</code></p>
+<p>node:6.9.1，官方的镜像太大，近700M，所以基于ubuntu:latest（127.2MB）自制了一个，大小<br>169.8MB。国内apt-get默认源的速度不理想，于是手动下载后ADD进去。<br>Dockerfile如下<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> ubuntu:latest</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> NPM_CONFIG_LOGLEVEL info</div><div class="line"><span class="keyword">ENV</span> NODE_VERSION <span class="number">6.9</span>.<span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">ADD</span><span class="bash"> node-v6.9.1-linux-x64.tar.xz /usr/<span class="built_in">local</span>/</span></div><div class="line"><span class="keyword">ENV</span> NODE_HOME /usr/local/node-v6.<span class="number">9.1</span>-linux-x64</div><div class="line"><span class="keyword">ENV</span> PATH=$PATH:$NODE_HOME/bin</div><div class="line"></div><div class="line"><span class="keyword">CMD</span><span class="bash"> [ <span class="string">"node"</span> ]</span></div></pre></td></tr></table></figure></p>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>启动后接到大量图片请求，http referer指向一个1080网站，于是在 <code>location /</code> 节点中进行屏敝<br><code>if ($http_referer ~* shedake\.net) {return 403;}</code> 。</p>
+<p>这个ip可能被做过1080的下载站，目前ping的速度也不理想，果断换了台机器。</p>
+<h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><p>首次启动后出现引导界面，有2个安装插件的选项，怎么点都会报错，Jenkins的文档也是无力吐糟，折腾<br>半个多小时才发现右上角居然可以关闭引导。<br>关闭引导后进入系统管理手动安装插件。</p>
+<p>安装ssh-agent，并新建一个credential，填入私钥，并在git服务器上添加公钥，这样就可以基于<br>git协议pull代码，而不需要填入git服务器的帐号密码。</p>
+<p>安装Bitbucket Plugin，在Bitbucket添加webhooks <code>JENKINS_URL/bitbucket-hook/</code> ，<br>在Jenkins 项目中勾选 <code>Build when a change is pushed to BitBucket</code> 。<br>当代码push到Bitbucket后会通知Jenkins处理。Jenkins收到通知后会自动pull代码并切到相应分支，<br>仓库存放在 <code>/var/lib/jenkins/workspace/</code> ，可以用 <code>$(pwd)</code> 获得当前目录。</p>
+<p>构建命令简单的填入 <code>bash ./build.sh</code> ，然后在项目中维护脚本，主要是编译代码，build docker<br>镜像，删除原有container，运行新的container。</p>
+<p>Jenkins的内存占用还是比较惊人的，只跑了mongodb、nodejs、nginx、jenkins的情况下，768M的内<br>存会出现out of memory。只好在发布前手动开起 <code>/etc/init.d/jenkins restart</code> ，<br>发布完后关闭 <code>/etc/init.d/jenkins stop</code> 。即使如此build后nodejs如果执行任务过多还是会<br>out fo memory。</p>
+<h2 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h2><p>为了支持React和Bootstrap需要添加下面的loader，相应的loader通过npm安装<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">module</span>: &#123;</div><div class="line">        <span class="attribute">loaders</span>: [</div><div class="line">            &#123; </div><div class="line">                test: /\.jsx?$/, </div><div class="line">                exclude: /node_modules/, </div><div class="line">                loader: <span class="string">'babel-loader'</span>, </div><div class="line">                query: &#123; presets: [<span class="string">'es2015'</span>, <span class="string">'react'</span>] &#125; </div><div class="line">            &#125;,</div><div class="line">            &#123; </div><div class="line">                <span class="attribute">test</span>: /\.css$/, </div><div class="line">                loader: <span class="string">'style!css'</span> </div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="attribute">test</span>: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,</div><div class="line">                loader: <span class="string">'url?limit=10000&amp;mimetype=application/font-woff'</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="attribute">test</span>: /\.<span class="built_in">ttf</span>(\?v=\d+\.\d+\.\d+)?$/,</div><div class="line">                loader: <span class="string">'url?limit=10000&amp;mimetype=application/octet-stream'</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="attribute">test</span>: /\.<span class="built_in">eot</span>(\?v=\d+\.\d+\.\d+)?$/,</div><div class="line">                loader: <span class="string">'file'</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">                <span class="attribute">test</span>: /\.<span class="built_in">svg</span>(\?v=\d+\.\d+\.\d+)?$/,</div><div class="line">                loader: <span class="string">'url?limit=10000&amp;mimetype=image/svg+xml'</span></div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>调试和代码映射<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">debug:</span> <span class="literal">true</span>,</div><div class="line"><span class="string">devtool:</span> <span class="string">"source-map"</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/29/2016-11-29-build-web-site-md/" data-id="ciw3fdrfw0008uztli6t76fpo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-3-9-vim-quick-guide" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/09/2016-3-9-vim-quick-guide/" class="article-date">
+  <time datetime="2016-03-09T10:27:07.000Z" itemprop="datePublished">2016-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/09/2016-3-9-vim-quick-guide/">Vim快速复习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>用则进，不用则废。此篇用于快速复习Vim。</p>
+<h2 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">i</span> 在光标前插入</div><div class="line">I 在一行的开头处插入</div><div class="line"><span class="selector-tag">a</span> 在光标后追加</div><div class="line">A 在一行的结尾处追加</div><div class="line">o 在光标位置的下一行插入一行</div><div class="line">O 在光标位置的上一行插入一行</div><div class="line">r 替换单个字符</div><div class="line">R 替换，直到&lt;esc&gt;退出</div><div class="line">c change，修改，配合光标移动命令使用</div><div class="line">cw 修改单词</div><div class="line">c$ 修改光标处到行尾</div><div class="line"><span class="number">10</span>I*&lt;esc&gt; 在一行开头插入<span class="number">10</span>个*，处理速度较慢</div><div class="line">J 合并下一行</div><div class="line">y 复制行</div><div class="line"><span class="selector-tag">p</span> 粘贴到光标下一行</div><div class="line"><span class="selector-tag">dd</span> 删除行</div></pre></td></tr></table></figure>
+<h2 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">h 左移<span class="number">1</span>列</div><div class="line">j 下移<span class="number">1</span>行</div><div class="line">k 上移<span class="number">1</span>行</div><div class="line">l 右移<span class="number">1</span>列</div><div class="line"><span class="number">10</span>h 左移<span class="number">10</span>列</div><div class="line">gj 下移一行（包括折行）</div><div class="line">gk 上移一行（包括折行）</div><div class="line">ctrl+f 下翻一页</div><div class="line">ctrl+b 上翻一页</div><div class="line">ctrl+d 下翻半页</div><div class="line">ctrl+u 上翻半页</div><div class="line">gg 移到第一行</div><div class="line">G 移到文件尾</div><div class="line"><span class="number">12</span>G 移到第<span class="number">12</span>行</div><div class="line">H 移到该页顶</div><div class="line">M 移到该页中间</div><div class="line">L 移到该页尾</div><div class="line"><span class="number">75</span>% 移到<span class="number">75</span>%处</div><div class="line"><span class="number">0</span> 移到行首</div><div class="line">$ 移到行尾</div><div class="line">w 移到下一个单词词首</div><div class="line">b 移到上一个单词词首</div><div class="line">e 移到下一个单词词尾</div><div class="line">ge 移到上一个单词词尾</div><div class="line">zt 将光标所在行移到窗口顶部</div><div class="line">zz 将光标所在行移到窗口中部</div><div class="line">zb 将光标所在行移到窗口底部</div></pre></td></tr></table></figure>
+<h2 id="查找与替换"><a href="#查找与替换" class="headerlink" title="查找与替换"></a>查找与替换</h2><h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/ 正向搜索</div><div class="line">? 反向搜索</div><div class="line">n 搜索下一个匹配的单词</div><div class="line"><span class="keyword">N</span> 搜索上一个匹配的单词</div><div class="line">\* 在<span class="keyword">Normal</span>下，正向搜索当前光标下的单词</div><div class="line">\# 在<span class="keyword">Normal</span>下，反向搜索当前光标下的单词</div><div class="line">g* 在<span class="keyword">Normal</span>下，正向搜索包含当前光标下单词的所有单词</div><div class="line">g# 在<span class="keyword">Normal</span>下，反向搜索包含当前光标下单词的所有单词</div></pre></td></tr></table></figure>
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">:</span>[range]s/from/to/[flags]</div><div class="line">range 搜索范围，如不指定，则作用于当前行</div><div class="line"><span class="symbol">:</span><span class="number">1</span>,<span class="number">10</span>s/from/to/ 在第<span class="number">1</span>到第<span class="number">10</span>行之间搜索替换</div><div class="line"><span class="symbol">:%s/from/to/</span> 在所有行中搜索替换</div></pre></td></tr></table></figure>
+<p>flags有四种<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">c 每次替换前询问</div><div class="line">e 不显示错误</div><div class="line">g 整行替换，如不加，则只替换每行的第一个匹配的字符串</div><div class="line"><span class="selector-tag">i</span> 忽略大小写</div></pre></td></tr></table></figure></p>
+<h3 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h3><table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>匹配任意字符</td>
+</tr>
+<tr>
+<td>[abc]</td>
+<td>匹配方括号中的任意一个字符，可用-表示字符范围</td>
+</tr>
+<tr>
+<td>[^abc]</td>
+<td>匹配除方括号中字符之外的任意字符</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配阿拉伯数字，等同于[0-9]</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配阿拉伯数字之外的任意字符，等同于[^0-9]</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母与数字，等同于[0-9A-Za-z]</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>与\w相反</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>匹配<tab>字符</tab></td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配空白字符</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配非空白字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配0到任意个</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配1到任意个</td>
+</tr>
+<tr>
+<td>\?</td>
+<td>匹配0到1个</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>匹配n到m个</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>匹配n个</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>匹配n到任意个</td>
+</tr>
+<tr>
+<td>{,m}</td>
+<td>匹配0到m个</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配行尾</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配行首</td>
+</tr>
+<tr>
+<td>\&lt;</td>
+<td>匹配单词词首</td>
+</tr>
+<tr>
+<td>\&gt;</td>
+<td>匹配单词词尾</td>
+</tr>
+</tbody>
+</table>
+<h2 id="文件管理与window操作"><a href="#文件管理与window操作" class="headerlink" title="文件管理与window操作"></a>文件管理与window操作</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">:<span class="keyword">w</span> 保存</div><div class="line">:q 退出</div><div class="line">:<span class="keyword">e</span> <span class="symbol">&lt;filename&gt;</span> 打开文件</div><div class="line">:<span class="keyword">sp</span> <span class="symbol">&lt;filename&gt;</span> 打开文件并水平分割window</div><div class="line">:vsp <span class="symbol">&lt;filename&gt;</span> 打开文件并垂直分割window</div><div class="line">:<span class="keyword">ls</span> 列出<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">b</span> &lt;<span class="keyword">buffer</span> num&gt; 切换到相应的<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bn</span> 下一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bp</span> 上一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> 关闭当前<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> &lt;<span class="keyword">buffer</span> num&gt; 关闭相应的<span class="keyword">buffer</span></div><div class="line">ctrl+<span class="keyword">w</span>+h/<span class="keyword">j</span>/<span class="keyword">k</span>/<span class="keyword">l</span> 切换window</div><div class="line">ctrl+ww 切换到下一个window</div></pre></td></tr></table></figure>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">u 撤销</div><div class="line">ctrl+c 中断命令</div><div class="line">ctrl+z 回到<span class="built_in">shell</span>，在<span class="built_in">shell</span>中fg返回Vim</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/09/2016-3-9-vim-quick-guide/" data-id="ciw3fdrg3000duztltq4wsyfl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-10-28-download-android-source" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/28/2014-10-28-download-android-source/" class="article-date">
+  <time datetime="2014-10-28T12:49:00.000Z" itemprop="datePublished">2014-10-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/10/28/2014-10-28-download-android-source/">Android源码下载中的错误与解决办法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用 <code>python ./repo sync -f</code> 同步，可自动修复同步错误的文件</p>
+<p>设置shell代理</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ export HTTP_PROXY=http://<span class="tag">&lt;<span class="name">proxy_user_id</span>&gt;</span>:<span class="tag">&lt;<span class="name">proxy_password</span>&gt;</span>@<span class="tag">&lt;<span class="name">proxy_server</span>&gt;</span>:<span class="tag">&lt;<span class="name">proxy_port</span>&gt;</span></div><div class="line"></div><div class="line">$ export HTTPS_PROXY=http://<span class="tag">&lt;<span class="name">proxy_user_id</span>&gt;</span>:<span class="tag">&lt;<span class="name">proxy_password</span>&gt;</span>@<span class="tag">&lt;<span class="name">proxy_server</span>&gt;</span>:<span class="tag">&lt;<span class="name">proxy_port</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Not a git repository错误<br>多试几次，如果还不行，可查看相应目录下的config文件，找到仓库地址后手动同步</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">--bare</span> <span class="tag">&lt;repo_url&gt;</span></div></pre></td></tr></table></figure>
+<p>若有checkout分支，根目录要用 <code>git init</code> 初始化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/28/2014-10-28-download-android-source/" data-id="ciw3fdrfp0004uztl2a1yo30x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-source/">android source</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-6-18-android-string-place-holder" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/18/2014-6-18-android-string-place-holder/" class="article-date">
+  <time datetime="2014-06-18T09:30:00.000Z" itemprop="datePublished">2014-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/18/2014-6-18-android-string-place-holder/">Android字符串中使用占位符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一是可以通过Java的 <code>String.format(String format, Object... args)</code> 方法来实现</p>
+<p>二则是通过Android自带的 <code>getResources().getString(int id, Object... formatArgs）</code> 实现</p>
+<p>占位符的语法可以参考<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax" target="_blank" rel="external">Java文档</a></p>
+<p>简单演示下第二种方法</p>
+<p>strings.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"boolean_conversion"</span>&gt;</span>Boolean: %1$b\n<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"string_conversion"</span>&gt;</span>String: %1$s\n<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"integer_conversion"</span>&gt;</span>Integer: %1$d\n<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"float_conversion"</span>&gt;</span>Float: %1$.2f\n<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"date_or_time_conversion"</span>&gt;</span>Year: %1$tY, Month: %1$tM, Day:%1$td<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>MainActivity.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">ActionBarActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line"> 		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">	        setContentView(R.layout.ac_main);</div><div class="line"></div><div class="line">	        TextView text = (TextView) findViewById(R.id.ac_main_text);</div><div class="line">	        StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line">	        builder.append(</div><div class="line">	                getResources().getString(R.string.boolean_conversion, <span class="keyword">true</span>));</div><div class="line"></div><div class="line">	        builder.append(</div><div class="line">	                getResources().getString(R.string.string_conversion, <span class="string">"hello world"</span>));</div><div class="line"></div><div class="line">	        builder.append(</div><div class="line">	                getResources().getString(R.string.integer_conversion, <span class="number">1234</span>));</div><div class="line"></div><div class="line">	        builder.append(</div><div class="line">	                getResources().getString(R.string.float_conversion, <span class="number">1234.5678</span>));</div><div class="line"></div><div class="line">	        Calendar calendar = Calendar.getInstance();</div><div class="line">	        builder.append(</div><div class="line">	                getResources().getString(R.string.date_or_time_conversion, calendar));</div><div class="line"></div><div class="line">	        text.setText(builder.toString());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/06/18/2014-6-18-android-string-place-holder/" data-id="ciw3fdrfy0009uztl1egedeh7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-5-9-baidu-map-sdk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/09/2014-5-9-baidu-map-sdk/" class="article-date">
+  <time datetime="2014-05-09T14:00:00.000Z" itemprop="datePublished">2014-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/09/2014-5-9-baidu-map-sdk/">百度地图sdk的简单使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>去百度申请一个KEY，申请KEY时提供的keystore的sha1值与包名必须与使用的一致。下载sdk并包含到工程中。</p>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>新建一个Application的SubClass（比如MyApplication），并在AndroidManifest.xml中注册。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class MyApplication extends Application &#123;</div><div class="line">	private static final String BAIDU_MAP_KEY = "yourKey";</div><div class="line">	private BMapManager mBMapManager = null;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void onCreate() &#123;</div><div class="line">		super.onCreate();</div><div class="line"></div><div class="line">		initBaiduMapManager();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public boolean initBaiduMapManager() &#123;</div><div class="line">		if (mBMapManager == null) &#123;</div><div class="line">			mBMapManager = new BMapManager(getApplicationContext());</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		if (mBMapManager.init(BAIDU_MAP_KEY, null)) &#123;</div><div class="line">			// success</div><div class="line">		&#125; else &#123;</div><div class="line">			// error</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">```  </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"># 使用  </div><div class="line">在layout中加入  </div><div class="line"></div><div class="line">```xml  </div><div class="line">&lt;com.baidu.mapapi.map.MapView</div><div class="line">            android:id="@+id/map"</div><div class="line">	    android:layout_width="match_parent"</div><div class="line">	    android:layout_height="match_parent"</div><div class="line">	    android:clickable="true"/&gt;</div><div class="line"></div><div class="line">```  </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">```java</div><div class="line">MapView mapView = (MapView) findViewById(R.id.map);</div><div class="line">MapController controller = mapView.getController();</div><div class="line">double lat = 39.915;</div><div class="line">double lon = 116.404;</div><div class="line">GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));</div><div class="line">controller.setCenter(geoPoint);</div><div class="line">controller.setZoom(15);</div></pre></td></tr></table></figure>
+<h1 id="解决与ScrollView冲突"><a href="#解决与ScrollView冲突" class="headerlink" title="解决与ScrollView冲突"></a>解决与ScrollView冲突</h1><p>有时候MapView要嵌套到ScrollView中使用，此时会产生冲突，可用如下方法解决  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mapView.setOnTouchListener(<span class="keyword">new</span> View.OnTouchListener() &#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (event.getAction() == MotionEvent.ACTION_UP) &#123;</div><div class="line">			scrollView.requestDisallowInterceptTouchEvent(<span class="keyword">false</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			scrollView.requestDisallowInterceptTouchEvent(<span class="keyword">true</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="添加标记物"><a href="#添加标记物" class="headerlink" title="添加标记物"></a>添加标记物</h1><p>需要新建一个ItemizedOverlay的SubClass  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MarkOverlay</span> <span class="keyword">extends</span> <span class="title">ItemizedOverlay</span>&lt;<span class="title">OverlayItem</span>&gt; </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MarkOverlay</span><span class="params">(Drawable mark, MapView mapView)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(mark, mapView);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Drawable mark = getResources().getDrawable(R.drawable.location);</div><div class="line">OverlayItem item = <span class="keyword">new</span> OverlayItem(geoPoint, <span class="string">""</span>, <span class="string">""</span>);</div><div class="line">item.setMarker(mark);</div><div class="line">MarkOverlay markOverlay = <span class="keyword">new</span> MarkOverlay(mark, mapView);</div><div class="line">markOverlay.add(item);</div><div class="line">mapView.getOverlays().clear();</div><div class="line">mapView.getOverlays().add(markOverlay);</div><div class="line">mapView.refresh();</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/09/2014-5-9-baidu-map-sdk/" data-id="ciw3fdrg1000buztlh7yqxljd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/baidu-map/">baidu map</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-3-12-lvm-extend" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/03/12/2014-3-12-lvm-extend/" class="article-date">
+  <time datetime="2014-03-12T14:40:00.000Z" itemprop="datePublished">2014-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/03/12/2014-3-12-lvm-extend/">LVM扩展磁盘空间</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>用fdisk分区</p>
+</li>
+<li><p>初始化为pv <code>sudo pvcreate /dev/sda6</code></p>
+</li>
+<li><p>将分区加入vg <code>sudo vgextend vg1 /dev/sda6</code></p>
+</li>
+<li><p>扩展lv <code>sudo lvextend -L +100G /dev/vg1/vg1_home</code></p>
+</li>
+<li><p>扩展文件系统 <code>sudo resize2fs /dev/vg1/vg1_home</code></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/03/12/2014-3-12-lvm-extend/" data-id="ciw3fdrfr0005uztlhk6789vd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux-lvm/">linux lvm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2014-1-2-java-note-char" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/01/02/2014-1-2-java-note-char/" class="article-date">
+  <time datetime="2014-01-02T02:00:00.000Z" itemprop="datePublished">2014-01-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/01/02/2014-1-2-java-note-char/">Java笔记——字符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h1><p>Code Point： 一个Code Point表示一个Unicode字符，例如U+0041表示A，U+2122表示™，U+03C0表示π，U+1D56B表示𝕫。对于基本字符（basic multilingual），Code Point取值从U+0000到U+FFFF。对于扩展字符（supplementary characters），Code Point取值从U+10000到U+10FFFF。</p>
+<p>Code Unit：Code Unit是Java对Code Point的表示单元，固定为16-bit。对于基本字符，一个Code Unit对应一个Code Point。而对于扩展字符，需要用两个Code Unit表示一个Code Point，这些unit是用基本字符中的备用point编码来表示。第一个unit取值从U+D800到U+DBFF，第二个unit取值从U+DC00到U+DFFF。</p>
+<h1 id="2-输出unicode字符"><a href="#2-输出unicode字符" class="headerlink" title="2.输出unicode字符"></a>2.输出unicode字符</h1><p>对于基本字符，可以直接编码在字符串中</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">System.out.println(<span class="string">"U+0041 is \u0041"</span>)<span class="comment">;</span></div><div class="line">System.out.println(<span class="string">"U+2122 is \u2122"</span>)<span class="comment">;</span></div><div class="line">System.out.println(<span class="string">"U+03C0 is \u03C0"</span>)<span class="comment">;</span></div></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">U+<span class="number">0041</span> <span class="keyword">is</span> A</div><div class="line">U+<span class="number">2122</span> <span class="keyword">is</span> ™</div><div class="line">U+<span class="number">03</span>C0 <span class="keyword">is</span> π</div></pre></td></tr></table></figure>
+<p>对于扩展字符，需要使用Character类中的 <code>static char[] toChars(int codePoint)</code></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span>[] c = Character.toChars(<span class="number">0x1D56B</span>);</div><div class="line">System.out.<span class="built_in">println</span>(c);</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"U+1D56B is "</span> + <span class="keyword">new</span> <span class="keyword">String</span>(c));</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">𝕫</div><div class="line">U+<span class="number">1</span>D56B <span class="keyword">is</span> 𝕫</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><em>Core Java Volume I-Fundamentals 9th Edition</em></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/01/02/2014-1-2-java-note-char/" data-id="ciw3fdrfn0003uztlbibk3hqt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java-char-unicode-blog/">java char unicode blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2013-12-31-Write-resume-with-markdown" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/12/31/2013-12-31-Write-resume-with-markdown/" class="article-date">
+  <time datetime="2013-12-31T09:21:03.000Z" itemprop="datePublished">2013-12-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/31/2013-12-31-Write-resume-with-markdown/">使用Markdown撰写简历</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里用到的工具是markdown-resume，<a href="https://github.com/there4/markdown-resume" target="_blank" rel="external">Github地址</a><br>我fork了下，写了个中文版的sample.md，见<a href="https://github.com/ishitcno1/markdown-resume/tree/zhsample" target="_blank" rel="external">这里</a></p>
+<h1 id="1-安装php和wkhtmltopdf"><a href="#1-安装php和wkhtmltopdf" class="headerlink" title="1.安装php和wkhtmltopdf"></a>1.安装php和wkhtmltopdf</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> php5</div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> wkhtmltopdf</div></pre></td></tr></table></figure>
+<h1 id="2-获取markdown-resume"><a href="#2-获取markdown-resume" class="headerlink" title="2.获取markdown-resume"></a>2.获取markdown-resume</h1><p>原作者地址</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/there4/markdown-resume.git</div></pre></td></tr></table></figure>
+<p>我修改后的地址</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/ishitcno1/markdown-resume.git</div></pre></td></tr></table></figure>
+<h1 id="3-生成简历"><a href="#3-生成简历" class="headerlink" title="3.生成简历"></a>3.生成简历</h1><p>resume目录下的sample.md展示了语法，按其修改使用即可。如果你clone的我的版本，checkout zhsample分支后，resume中还会存在一个zhsample.md。这是一个中文版的示例。</p>
+<p>生成html版简历</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php .<span class="regexp">/bin/</span>resume.php --<span class="keyword">source</span> resume<span class="regexp">/sample.md</span></div></pre></td></tr></table></figure>
+<p>生成pdf版和html版简历</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php ./bin/resume<span class="selector-class">.php</span> --source resume/sample<span class="selector-class">.md</span> --pdf</div></pre></td></tr></table></figure>
+<h1 id="4-使用模板"><a href="#4-使用模板" class="headerlink" title="4.使用模板"></a>4.使用模板</h1><p>默认使用的模板是modern，项目还包含了blockish和unstyled，当然完全可以自定义。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php ./bin/resume<span class="selector-class">.php</span> --source resume/sample<span class="selector-class">.md</span> -t blockish</div></pre></td></tr></table></figure>
+<p>默认部分字体偏小，可以修改模板下的CSS文件，如修改resume.css</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">dl &#123;</div><div class="line">    dd &#123;</div><div class="line">        margin: 0 0 1.5em;</div><div class="line">        padding: 0;</div><div class="line">        font-size: 100%;</div><div class="line">        line-height: 1.4em;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#footer + p &#123;</div><div class="line">    width: 100%;</div><div class="line">    font-size: 16px;</div><div class="line">    text-align: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/12/31/2013-12-31-Write-resume-with-markdown/" data-id="ciw3fdrfh0001uztlqbpo9jtr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2013-12-25-Use-jekyll-with-github" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/12/25/2013-12-25-Use-jekyll-with-github/" class="article-date">
+  <time datetime="2013-12-25T14:37:23.000Z" itemprop="datePublished">2013-12-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/25/2013-12-25-Use-jekyll-with-github/">使用jekyll在github上写blog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-安装jekyll"><a href="#1-安装jekyll" class="headerlink" title="1.安装jekyll"></a>1.安装jekyll</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gem <span class="keyword">install</span> jekyll</div></pre></td></tr></table></figure>
+<h1 id="2-创建帐号"><a href="#2-创建帐号" class="headerlink" title="2.创建帐号"></a>2.创建帐号</h1><p>在github上新建repo，形式为username.github.io，其中username与你的用户名相同。具体可以看<a href="http://pages.github.com/" target="_blank" rel="external">Github Pages</a></p>
+<p>将repo clone到本地，并用jekyll初始化项目 </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone git<span class="selector-class">.url</span></div><div class="line">cd username<span class="selector-class">.github</span><span class="selector-class">.io</span></div><div class="line">jekyll new myblog</div><div class="line">mv myblog<span class="comment">/* ./</span></div><div class="line">mv myblog/.gitignore ./</div><div class="line">rmdir myblog/</div></pre></td></tr></table></figure>
+<h1 id="3-开发与测试"><a href="#3-开发与测试" class="headerlink" title="3.开发与测试"></a>3.开发与测试</h1><p>运行开发服务器，加入 <code>--watch</code> 后，jekyll会监视文件的改动并即时生成页面，方便开发。  </p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jekyll server <span class="comment">--watch</span></div></pre></td></tr></table></figure>
+<p>用浏览器访问 <code>localhost:4000</code> 就能看到生成的页面。<br>具体的开发参看<a href="http://jekyllrb.com/docs/home/" target="_blank" rel="external">jekyll官网</a>和其他人搭建的blog。  </p>
+<h1 id="4-推送到github"><a href="#4-推送到github" class="headerlink" title="4.推送到github"></a>4.推送到github</h1><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">push</span> -u <span class="built_in">origin</span> master</div></pre></td></tr></table></figure>
+<p>等10分钟左右，用浏览器打开username.github.io就可以看到生成的页面了。  </p>
+<h1 id="5-后记"><a href="#5-后记" class="headerlink" title="5.后记"></a>5.后记</h1><p>这只是一篇简单的流程，具体使用jekyll还是看官方文档。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/12/25/2013-12-25-Use-jekyll-with-github/" data-id="ciw3fdrfc0000uztlyr9zhyyg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jekyll-github-markdown-blog/">jekyll github markdown blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-source/">android source</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/baidu-map/">baidu map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-char-unicode-blog/">java char unicode blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-github-markdown-blog/">jekyll github markdown blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-lvm/">linux lvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/android-source/" style="font-size: 10px;">android source</a> <a href="/tags/baidu-map/" style="font-size: 10px;">baidu map</a> <a href="/tags/java-char-unicode-blog/" style="font-size: 10px;">java char unicode blog</a> <a href="/tags/jekyll-github-markdown-blog/" style="font-size: 10px;">jekyll github markdown blog</a> <a href="/tags/linux-lvm/" style="font-size: 10px;">linux lvm</a> <a href="/tags/resume-markdown-blog/" style="font-size: 10px;">resume markdown blog</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/29/2016-11-29-build-web-site-md/">网站开发总结</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/2016-3-9-vim-quick-guide/">Vim快速复习</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/28/2014-10-28-download-android-source/">Android源码下载中的错误与解决办法</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/18/2014-6-18-android-string-place-holder/">Android字符串中使用占位符</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/09/2014-5-9-baidu-map-sdk/">百度地图sdk的简单使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- my blog -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3283287286910308"
+     data-ad-slot="2306449074"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 ishitcno1<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

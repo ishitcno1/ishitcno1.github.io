@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Markdown撰写简历 | 晓耕翻露草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里用到的工具是markdown-resume，Github地址我fork了下，写了个中文版的sample.md，见这里
+1.安装php和wkhtmltopdf12sudo apt-get install php5sudo apt-get install wkhtmltopdf
+2.获取markdown-resume原作者地址
+1git clone https://github.com/there">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Markdown撰写简历">
+<meta property="og:url" content="http://yoursite.com/2013/12/31/2013-12-31-Write-resume-with-markdown/index.html">
+<meta property="og:site_name" content="晓耕翻露草">
+<meta property="og:description" content="这里用到的工具是markdown-resume，Github地址我fork了下，写了个中文版的sample.md，见这里
+1.安装php和wkhtmltopdf12sudo apt-get install php5sudo apt-get install wkhtmltopdf
+2.获取markdown-resume原作者地址
+1git clone https://github.com/there">
+<meta property="og:updated_time" content="2016-11-29T11:27:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Markdown撰写简历">
+<meta name="twitter:description" content="这里用到的工具是markdown-resume，Github地址我fork了下，写了个中文版的sample.md，见这里
+1.安装php和wkhtmltopdf12sudo apt-get install php5sudo apt-get install wkhtmltopdf
+2.获取markdown-resume原作者地址
+1git clone https://github.com/there">
+  
+    <link rel="alternative" href="/atom.xml" title="晓耕翻露草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">晓耕翻露草</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2013-12-31-Write-resume-with-markdown" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/12/31/2013-12-31-Write-resume-with-markdown/" class="article-date">
+  <time datetime="2013-12-31T09:21:03.000Z" itemprop="datePublished">2013-12-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用Markdown撰写简历
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里用到的工具是markdown-resume，<a href="https://github.com/there4/markdown-resume" target="_blank" rel="external">Github地址</a><br>我fork了下，写了个中文版的sample.md，见<a href="https://github.com/ishitcno1/markdown-resume/tree/zhsample" target="_blank" rel="external">这里</a></p>
+<h1 id="1-安装php和wkhtmltopdf"><a href="#1-安装php和wkhtmltopdf" class="headerlink" title="1.安装php和wkhtmltopdf"></a>1.安装php和wkhtmltopdf</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> php5</div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> wkhtmltopdf</div></pre></td></tr></table></figure>
+<h1 id="2-获取markdown-resume"><a href="#2-获取markdown-resume" class="headerlink" title="2.获取markdown-resume"></a>2.获取markdown-resume</h1><p>原作者地址</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/there4/markdown-resume.git</div></pre></td></tr></table></figure>
+<p>我修改后的地址</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/ishitcno1/markdown-resume.git</div></pre></td></tr></table></figure>
+<h1 id="3-生成简历"><a href="#3-生成简历" class="headerlink" title="3.生成简历"></a>3.生成简历</h1><p>resume目录下的sample.md展示了语法，按其修改使用即可。如果你clone的我的版本，checkout zhsample分支后，resume中还会存在一个zhsample.md。这是一个中文版的示例。</p>
+<p>生成html版简历</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php .<span class="regexp">/bin/</span>resume.php --<span class="keyword">source</span> resume<span class="regexp">/sample.md</span></div></pre></td></tr></table></figure>
+<p>生成pdf版和html版简历</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php ./bin/resume<span class="selector-class">.php</span> --source resume/sample<span class="selector-class">.md</span> --pdf</div></pre></td></tr></table></figure>
+<h1 id="4-使用模板"><a href="#4-使用模板" class="headerlink" title="4.使用模板"></a>4.使用模板</h1><p>默认使用的模板是modern，项目还包含了blockish和unstyled，当然完全可以自定义。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php ./bin/resume<span class="selector-class">.php</span> --source resume/sample<span class="selector-class">.md</span> -t blockish</div></pre></td></tr></table></figure>
+<p>默认部分字体偏小，可以修改模板下的CSS文件，如修改resume.css</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">dl &#123;</div><div class="line">    dd &#123;</div><div class="line">        margin: 0 0 1.5em;</div><div class="line">        padding: 0;</div><div class="line">        font-size: 100%;</div><div class="line">        line-height: 1.4em;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#footer + p &#123;</div><div class="line">    width: 100%;</div><div class="line">    font-size: 16px;</div><div class="line">    text-align: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/12/31/2013-12-31-Write-resume-with-markdown/" data-id="ciw3fdrfh0001uztlqbpo9jtr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/01/02/2014-1-2-java-note-char/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java笔记——字符
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/12/25/2013-12-25-Use-jekyll-with-github/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用jekyll在github上写blog</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-source/">android source</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/baidu-map/">baidu map</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-char-unicode-blog/">java char unicode blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-github-markdown-blog/">jekyll github markdown blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-lvm/">linux lvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/android-source/" style="font-size: 10px;">android source</a> <a href="/tags/baidu-map/" style="font-size: 10px;">baidu map</a> <a href="/tags/java-char-unicode-blog/" style="font-size: 10px;">java char unicode blog</a> <a href="/tags/jekyll-github-markdown-blog/" style="font-size: 10px;">jekyll github markdown blog</a> <a href="/tags/linux-lvm/" style="font-size: 10px;">linux lvm</a> <a href="/tags/resume-markdown-blog/" style="font-size: 10px;">resume markdown blog</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/29/2016-11-29-build-web-site-md/">网站开发总结</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/2016-3-9-vim-quick-guide/">Vim快速复习</a>
+          </li>
+        
+          <li>
+            <a href="/2014/10/28/2014-10-28-download-android-source/">Android源码下载中的错误与解决办法</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/18/2014-6-18-android-string-place-holder/">Android字符串中使用占位符</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/09/2014-5-9-baidu-map-sdk/">百度地图sdk的简单使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- my blog -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3283287286910308"
+     data-ad-slot="2306449074"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 ishitcno1<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
