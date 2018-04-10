@@ -15,14 +15,19 @@ o 在光标位置的下一行插入一行
 O 在光标位置的上一行插入一行
 r 替换单个字符
 R 替换，直到<esc>退出
+v 进入选择模式
+ctrl+v 进行矩形选择模式
 c change，修改，配合光标移动命令使用
 cw 修改单词
 c$ 修改光标处到行尾
 10I*<esc> 在一行开头插入10个*，处理速度较慢
 J 合并下一行
-y 复制行
-p 粘贴到光标下一行
-dd 删除行
+y 复制
+yy 复制行
+p 粘贴到光标后
+P 粘贴到光标前
+d 剪切
+dd 剪切行
 ```
 
 ## 移动光标
@@ -123,8 +128,12 @@ $      | 匹配行尾
 :bp 上一个buffer
 :bd 关闭当前buffer
 :bd <buffer num> 关闭相应的buffer
+ctrl+w+n 打开一个水平分割的window
+ctrl+w+v 打开一个垂直分割的window
 ctrl+w+h/j/k/l 切换window
-ctrl+ww 切换到下一个window
+ctrl+w+w 切换到下一个window
+ctrl+w+c 关闭当前window
+ctrl+w+o 关闭其它window，只保留当前window
 ```
 
 ## 其它
