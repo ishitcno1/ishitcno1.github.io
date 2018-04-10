@@ -98,7 +98,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/29/2016-11-29-build-web-site-md/" data-id="ciw3fdrfw0008uztli6t76fpo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/29/2016-11-29-build-web-site-md/" data-id="cjftdrk17000ba35fguv51vmh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -131,7 +131,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>用则进，不用则废。此篇用于快速复习Vim。</p>
-<h2 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">i</span> 在光标前插入</div><div class="line">I 在一行的开头处插入</div><div class="line"><span class="selector-tag">a</span> 在光标后追加</div><div class="line">A 在一行的结尾处追加</div><div class="line">o 在光标位置的下一行插入一行</div><div class="line">O 在光标位置的上一行插入一行</div><div class="line">r 替换单个字符</div><div class="line">R 替换，直到&lt;esc&gt;退出</div><div class="line">c change，修改，配合光标移动命令使用</div><div class="line">cw 修改单词</div><div class="line">c$ 修改光标处到行尾</div><div class="line"><span class="number">10</span>I*&lt;esc&gt; 在一行开头插入<span class="number">10</span>个*，处理速度较慢</div><div class="line">J 合并下一行</div><div class="line">y 复制行</div><div class="line"><span class="selector-tag">p</span> 粘贴到光标下一行</div><div class="line"><span class="selector-tag">dd</span> 删除行</div></pre></td></tr></table></figure>
+<h2 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">i</span> 在光标前插入</div><div class="line">I 在一行的开头处插入</div><div class="line"><span class="selector-tag">a</span> 在光标后追加</div><div class="line">A 在一行的结尾处追加</div><div class="line">o 在光标位置的下一行插入一行</div><div class="line">O 在光标位置的上一行插入一行</div><div class="line">r 替换单个字符</div><div class="line">R 替换，直到&lt;esc&gt;退出</div><div class="line">v 进入选择模式</div><div class="line">ctrl+v 进行矩形选择模式</div><div class="line">c change，修改，配合光标移动命令使用</div><div class="line">cw 修改单词</div><div class="line">c$ 修改光标处到行尾</div><div class="line"><span class="number">10</span>I*&lt;esc&gt; 在一行开头插入<span class="number">10</span>个*，处理速度较慢</div><div class="line">J 合并下一行</div><div class="line">y 复制</div><div class="line">yy 复制行</div><div class="line"><span class="selector-tag">p</span> 粘贴到光标后</div><div class="line">P 粘贴到光标前</div><div class="line">d 剪切</div><div class="line"><span class="selector-tag">dd</span> 剪切行</div></pre></td></tr></table></figure>
 <h2 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">h 左移<span class="number">1</span>列</div><div class="line">j 下移<span class="number">1</span>行</div><div class="line">k 上移<span class="number">1</span>行</div><div class="line">l 右移<span class="number">1</span>列</div><div class="line"><span class="number">10</span>h 左移<span class="number">10</span>列</div><div class="line">gj 下移一行（包括折行）</div><div class="line">gk 上移一行（包括折行）</div><div class="line">ctrl+f 下翻一页</div><div class="line">ctrl+b 上翻一页</div><div class="line">ctrl+d 下翻半页</div><div class="line">ctrl+u 上翻半页</div><div class="line">gg 移到第一行</div><div class="line">G 移到文件尾</div><div class="line"><span class="number">12</span>G 移到第<span class="number">12</span>行</div><div class="line">H 移到该页顶</div><div class="line">M 移到该页中间</div><div class="line">L 移到该页尾</div><div class="line"><span class="number">75</span>% 移到<span class="number">75</span>%处</div><div class="line"><span class="number">0</span> 移到行首</div><div class="line">$ 移到行尾</div><div class="line">w 移到下一个单词词首</div><div class="line">b 移到上一个单词词首</div><div class="line">e 移到下一个单词词尾</div><div class="line">ge 移到上一个单词词尾</div><div class="line">zt 将光标所在行移到窗口顶部</div><div class="line">zz 将光标所在行移到窗口中部</div><div class="line">zb 将光标所在行移到窗口底部</div></pre></td></tr></table></figure>
 <h2 id="查找与替换"><a href="#查找与替换" class="headerlink" title="查找与替换"></a>查找与替换</h2><h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/ 正向搜索</div><div class="line">? 反向搜索</div><div class="line">n 搜索下一个匹配的单词</div><div class="line"><span class="keyword">N</span> 搜索上一个匹配的单词</div><div class="line">\* 在<span class="keyword">Normal</span>下，正向搜索当前光标下的单词</div><div class="line">\# 在<span class="keyword">Normal</span>下，反向搜索当前光标下的单词</div><div class="line">g* 在<span class="keyword">Normal</span>下，正向搜索包含当前光标下单词的所有单词</div><div class="line">g# 在<span class="keyword">Normal</span>下，反向搜索包含当前光标下单词的所有单词</div></pre></td></tr></table></figure>
 <h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">:</span>[range]s/from/to/[flags]</div><div class="line">range 搜索范围，如不指定，则作用于当前行</div><div class="line"><span class="symbol">:</span><span class="number">1</span>,<span class="number">10</span>s/from/to/ 在第<span class="number">1</span>到第<span class="number">10</span>行之间搜索替换</div><div class="line"><span class="symbol">:%s/from/to/</span> 在所有行中搜索替换</div></pre></td></tr></table></figure>
@@ -230,13 +230,13 @@
 </tr>
 </tbody>
 </table>
-<h2 id="文件管理与window操作"><a href="#文件管理与window操作" class="headerlink" title="文件管理与window操作"></a>文件管理与window操作</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">:<span class="keyword">w</span> 保存</div><div class="line">:q 退出</div><div class="line">:<span class="keyword">e</span> <span class="symbol">&lt;filename&gt;</span> 打开文件</div><div class="line">:<span class="keyword">sp</span> <span class="symbol">&lt;filename&gt;</span> 打开文件并水平分割window</div><div class="line">:vsp <span class="symbol">&lt;filename&gt;</span> 打开文件并垂直分割window</div><div class="line">:<span class="keyword">ls</span> 列出<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">b</span> &lt;<span class="keyword">buffer</span> num&gt; 切换到相应的<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bn</span> 下一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bp</span> 上一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> 关闭当前<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> &lt;<span class="keyword">buffer</span> num&gt; 关闭相应的<span class="keyword">buffer</span></div><div class="line">ctrl+<span class="keyword">w</span>+h/<span class="keyword">j</span>/<span class="keyword">k</span>/<span class="keyword">l</span> 切换window</div><div class="line">ctrl+ww 切换到下一个window</div></pre></td></tr></table></figure>
+<h2 id="文件管理与window操作"><a href="#文件管理与window操作" class="headerlink" title="文件管理与window操作"></a>文件管理与window操作</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">:<span class="keyword">w</span> 保存</div><div class="line">:q 退出</div><div class="line">:<span class="keyword">e</span> <span class="symbol">&lt;filename&gt;</span> 打开文件</div><div class="line">:<span class="keyword">sp</span> <span class="symbol">&lt;filename&gt;</span> 打开文件并水平分割window</div><div class="line">:vsp <span class="symbol">&lt;filename&gt;</span> 打开文件并垂直分割window</div><div class="line">:<span class="keyword">ls</span> 列出<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">b</span> &lt;<span class="keyword">buffer</span> num&gt; 切换到相应的<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bn</span> 下一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bp</span> 上一个<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> 关闭当前<span class="keyword">buffer</span></div><div class="line">:<span class="keyword">bd</span> &lt;<span class="keyword">buffer</span> num&gt; 关闭相应的<span class="keyword">buffer</span></div><div class="line">ctrl+<span class="keyword">w</span>+n 打开一个水平分割的window</div><div class="line">ctrl+<span class="keyword">w</span>+v 打开一个垂直分割的window</div><div class="line">ctrl+<span class="keyword">w</span>+h/<span class="keyword">j</span>/<span class="keyword">k</span>/<span class="keyword">l</span> 切换window</div><div class="line">ctrl+<span class="keyword">w</span>+<span class="keyword">w</span> 切换到下一个window</div><div class="line">ctrl+<span class="keyword">w</span>+<span class="keyword">c</span> 关闭当前window</div><div class="line">ctrl+<span class="keyword">w</span>+<span class="keyword">o</span> 关闭其它window，只保留当前window</div></pre></td></tr></table></figure>
 <h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">u 撤销</div><div class="line">ctrl+c 中断命令</div><div class="line">ctrl+z 回到<span class="built_in">shell</span>，在<span class="built_in">shell</span>中fg返回Vim</div></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/09/2016-3-9-vim-quick-guide/" data-id="ciw3fdrg3000duztltq4wsyfl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/09/2016-3-9-vim-quick-guide/" data-id="cjftdrk17000da35fmxsi2h92" class="article-share-link">Share</a>
       
       
     </footer>
@@ -278,7 +278,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/28/2014-10-28-download-android-source/" data-id="ciw3fdrfp0004uztl2a1yo30x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/10/28/2014-10-28-download-android-source/" data-id="cjftdrk130004a35fmqbwyf1f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-source/">android source</a></li></ul>
@@ -324,7 +324,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/06/18/2014-6-18-android-string-place-holder/" data-id="ciw3fdrfy0009uztl1egedeh7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/06/18/2014-6-18-android-string-place-holder/" data-id="cjftdrk160009a35fr6yppec3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -370,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/05/09/2014-5-9-baidu-map-sdk/" data-id="ciw3fdrg1000buztlh7yqxljd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/05/09/2014-5-9-baidu-map-sdk/" data-id="cjftdrk140008a35fn15worbh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/baidu-map/">baidu map</a></li></ul>
@@ -420,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/03/12/2014-3-12-lvm-extend/" data-id="ciw3fdrfr0005uztlhk6789vd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/03/12/2014-3-12-lvm-extend/" data-id="cjftdrk130005a35f2of40yct" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux-lvm/">linux lvm</a></li></ul>
@@ -471,7 +471,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/01/02/2014-1-2-java-note-char/" data-id="ciw3fdrfn0003uztlbibk3hqt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/01/02/2014-1-2-java-note-char/" data-id="cjftdrk120003a35fs55tq8b3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java-char-unicode-blog/">java char unicode blog</a></li></ul>
@@ -524,7 +524,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/12/31/2013-12-31-Write-resume-with-markdown/" data-id="ciw3fdrfh0001uztlqbpo9jtr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2013/12/31/2013-12-31-Write-resume-with-markdown/" data-id="cjftdrk0z0001a35f8wo3e5pq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resume-markdown-blog/">resume markdown blog</a></li></ul>
@@ -572,7 +572,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/12/25/2013-12-25-Use-jekyll-with-github/" data-id="ciw3fdrfc0000uztlyr9zhyyg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2013/12/25/2013-12-25-Use-jekyll-with-github/" data-id="cjftdrk0v0000a35fpin1zmsm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jekyll-github-markdown-blog/">jekyll github markdown blog</a></li></ul>
@@ -669,7 +669,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 ishitcno1<br>
+      &copy; 2018 ishitcno1<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
