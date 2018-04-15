@@ -143,3 +143,5 @@ ctrl+c 中断命令
 ctrl+z 回到shell，在shell中fg返回Vim
 ```
 
+## Vimrc
+<script src="https://gist.github.com/ishitcno1/efc19f094cca5bedb762.js"></script>
